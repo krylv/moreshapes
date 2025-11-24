@@ -1,0 +1,31 @@
+.form_container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.submit_btn {
+  color: white;
+  padding: 6px;
+  background-color: var(--bg-tertiary);
+  width: fit-content;
+  border-radius: 10px;
+}
+
+.error_text {
+  position: relative;
+  color: #a33737;
+  font-size: 18px;
+  opacity: 1 !important;
+  min-height: 21px;
+}
+
+.field_container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label_text {
+  color: white;
+}

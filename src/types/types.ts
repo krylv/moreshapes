@@ -6,6 +6,9 @@ export interface IBaseShape {
   color: string;
   position: IPosition;
   type: TShapeTypes;
+  move(newPosition: IPosition): void;
+  changeColor(newColor: string): void;
+  resize(newSize: number): void;
   render(): JSX.Element;
 }
 

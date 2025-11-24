@@ -10,6 +10,7 @@
 
 .context_item {
   color: white;
+  position: relative;
   padding: 10px;
   transition: all 300ms ease;
   display: flex;

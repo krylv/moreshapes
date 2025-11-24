@@ -11,7 +11,7 @@ interface IContextMenu {
 }
 
 export const ShapeRenderer = () => {
-  const { selectedShape, shapes, selectShape } = useShapeStore();
+  const { selectedShape, shapes, selectShape, changeColor } = useShapeStore();
   const [contextMenu, setContextMenu] = useState<IContextMenu | null>(null);
   const contextMenuRef = useRef<HTMLDivElement>(null);
 
@@ -95,7 +95,19 @@ export const ShapeRenderer = () => {
         >
           <div className={styles.context_item}>
             <p>Изменить цвет</p>
-            <input style={{ cursor: "pointer" }} type="color" />
+            <input
+              style={{
+                position: "absolute",
+                opacity: 0,
+                inset: 0,
+                width: "100%",
+                height: "100%",
+              }}
+              type="color"
+              onInput={(e) =>
+                changeColor(contextMenu.shape, e.currentTarget.value)
+              }
+            />
           </div>
           <button className={styles.context_item}>Изменить размер</button>
         </div>

@@ -15,7 +15,7 @@ export abstract class BaseShape implements IBaseShape, IDraggable {
     type: TShapeTypes,
     position: IPosition,
     size: number,
-    color: string,
+    color: string
   ) {
     this.id = BaseShape.idCounter++;
     this.color = color;
@@ -33,6 +33,10 @@ export abstract class BaseShape implements IBaseShape, IDraggable {
 
   public resize(newSize: number): void {
     this.size = newSize;
+  }
+
+  public changeColor(newColor: string): void {
+    this.color = newColor;
   }
 
   public startDrag(): void {

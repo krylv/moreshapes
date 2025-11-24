@@ -1,11 +1,12 @@
-import { ShapeRenderer, Toolbar } from "@/components"
+import { ShapeRenderer, Toolbar } from "@/components";
 
 function App() {
   return (
-  <>
-    <Toolbar />
-    <ShapeRenderer/></>
-  )
+    <>
+      <Toolbar />
+      <ShapeRenderer />
+    </>
+  );
 }
 
-export default App
+export default App;

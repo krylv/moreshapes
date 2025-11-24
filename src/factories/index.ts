@@ -1,1 +1,1 @@
-export {ShapeFactory} from './ShapeFactory'
+export { ShapeFactory } from "./ShapeFactory";

@@ -9,9 +9,9 @@
     "skipLibCheck": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*":["./*"]
+      "@/*": ["./*"]
     },
-   
+
     /* Bundler mode */
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,

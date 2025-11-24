@@ -1,2 +1,2 @@
-export {ShapeRenderer} from './ShapeRenderer'
-export {Toolbar} from './Toolbar/Toolbar'
+export { ShapeRenderer } from "./ShapeRenderer/ShapeRenderer";
+export { Toolbar } from "./Toolbar/Toolbar";

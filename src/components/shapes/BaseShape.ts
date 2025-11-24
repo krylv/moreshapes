@@ -1,41 +1,45 @@
 import type { JSX } from "react";
 import type { IBaseShape, IDraggable, IPosition, TShapeTypes } from "types";
 
-export abstract class BaseShape implements IBaseShape,IDraggable {
-	private static idCounter:number = 0
-	
-	public id:number
-	public color:string
-	public position: IPosition;
-	public size: number;
-	public type: TShapeTypes;
-	public isDraggable: boolean;
+export abstract class BaseShape implements IBaseShape, IDraggable {
+  private static idCounter: number = 0;
 
-	constructor(type:TShapeTypes,position:IPosition,size:number,color:string) {
-		this.id = BaseShape.idCounter++
-		this.color = color
-		this.position = position
-		this.size = size
-		this.type = type
-		this.isDraggable = false
-	}
+  public id: number;
+  public color: string;
+  public position: IPosition;
+  public size: number;
+  public type: TShapeTypes;
+  public isDraggable: boolean;
 
-	public abstract render():JSX.Element
+  constructor(
+    type: TShapeTypes,
+    position: IPosition,
+    size: number,
+    color: string,
+  ) {
+    this.id = BaseShape.idCounter++;
+    this.color = color;
+    this.position = position;
+    this.size = size;
+    this.type = type;
+    this.isDraggable = false;
+  }
 
-	public move(newPosition:IPosition):void {
-		this.position = newPosition
-	}
+  public abstract render(): JSX.Element;
 
-	public resize (newSize:number):void {
-		this.size = newSize
-	}
+  public move(newPosition: IPosition): void {
+    this.position = newPosition;
+  }
 
-	public startDrag(): void {
-		this.isDraggable = true
-	}
+  public resize(newSize: number): void {
+    this.size = newSize;
+  }
 
-	public endDrag(): void {
-		this.isDraggable = false
-	}
-	
+  public startDrag(): void {
+    this.isDraggable = true;
+  }
+
+  public endDrag(): void {
+    this.isDraggable = false;
+  }
 }

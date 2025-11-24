@@ -1,0 +1,21 @@
+.context_menu {
+  position: absolute;
+  width: 200px;
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.context_item {
+  color: white;
+  padding: 10px;
+  transition: all 300ms ease;
+  display: flex;
+  gap: 15px;
+
+  &:hover {
+    background-color: var(--bg-tertiary);
+  }
+}

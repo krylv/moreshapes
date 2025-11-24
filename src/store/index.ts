@@ -1,1 +1,1 @@
-export {useShapeStore} from './store.ts'
+export { useShapeStore } from "./store.ts";

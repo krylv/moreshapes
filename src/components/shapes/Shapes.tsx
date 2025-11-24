@@ -1,4 +1,4 @@
-import type { IPosition } from "types/types";
+import type { IPosition } from "types";
 import { BaseShape } from "./BaseShape";
 import type { JSX } from "react";
 

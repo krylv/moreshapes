@@ -1,8 +1,10 @@
-import { ShapeRenderer } from "components/ShapeRenderer"
+import { ShapeRenderer, Toolbar } from "@/components"
 
 function App() {
   return (
-    <ShapeRenderer/>
+  <>
+    <Toolbar />
+    <ShapeRenderer/></>
   )
 }
 

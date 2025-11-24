@@ -21,3 +21,5 @@ export interface IDraggable {
 }
 
 export type TShapeTypes = 'circle' | 'square'
+
+export type TDraggableShape = IBaseShape & IDraggable;

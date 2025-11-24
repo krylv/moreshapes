@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import type { IBaseShape, IDraggable, IPosition, TShapeTypes } from "types/types";
+import type { IBaseShape, IDraggable, IPosition, TShapeTypes } from "types";
 
 export abstract class BaseShape implements IBaseShape,IDraggable {
 	private static idCounter:number = 0

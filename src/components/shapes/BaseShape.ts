@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import type { IPosition } from "types/types";
+import type { IBaseShape, IDraggable, IPosition, TShapeTypes } from "types/types";
 
 export abstract class BaseShape implements IBaseShape,IDraggable {
 	private static idCounter:number = 0
@@ -30,11 +30,11 @@ export abstract class BaseShape implements IBaseShape,IDraggable {
 		this.size = newSize
 	}
 
-	startDrag(): void {
+	public startDrag(): void {
 		this.isDraggable = true
 	}
 
-	endDrag(): void {
+	public endDrag(): void {
 		this.isDraggable = false
 	}
 	

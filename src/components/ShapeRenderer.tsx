@@ -4,7 +4,7 @@ import type { IBaseShape } from "src/types"
 
 export const ShapeRenderer = () => {
 	const [shapes,setShapes] = useState<IBaseShape[]>()
-	const newShape = new Square({x:20,y:20},40,'red')
+	const newShape = new Square({x:200,y:20},40,'red')
 	const newCircle = new Circle({x:50,y:50},40,'black')
 
 	useEffect(() => {

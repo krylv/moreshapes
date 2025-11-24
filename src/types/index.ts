@@ -1,0 +1,1 @@
+export type {IBaseShape,IDraggable,IPosition,TShapeTypes} from './types'

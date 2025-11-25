@@ -18,10 +18,9 @@ export const ShapeRenderer = () => {
       shape.startDrag();
       selectShape(shape.id);
       setContextMenu(null);
-      const targetChildren = e.currentTarget.children.namedItem(
-        "shape"
+      const targetChildren = e.currentTarget.querySelector(
+        "div > div"
       ) as HTMLElement;
-
       targetChildren.style.zIndex = "9999";
     }
     if (e.button === 2) {
@@ -41,8 +40,6 @@ export const ShapeRenderer = () => {
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
       if (!selectedShape || !selectedShape.isDraggable) return;
-      event.preventDefault();
-      event.stopPropagation();
 
       const newPosition = {
         x: event.clientX - selectedShape.size / 2,
@@ -63,19 +60,17 @@ export const ShapeRenderer = () => {
     [selectShape, selectedShape, magnetizm, shapes]
   );
 
-  const handleMouseUp = useCallback(
-    (e: MouseEvent) => {
-      if (selectedShape) {
-        selectedShape.endDrag();
-        selectShape(null);
-        const targetChildren = e.currentTarget.children.namedItem(
-          "shape"
-        ) as HTMLElement;
-        targetChildren.style.zIndex = "5";
-      }
-    },
-    [selectedShape, selectShape]
-  );
+  const handleMouseUp = useCallback(() => {
+    if (selectedShape) {
+      selectedShape.endDrag();
+      selectShape(null);
+
+      const highZIndexElements = document.querySelector(
+        '[style*="z-index: 9999"]'
+      ) as HTMLElement;
+      highZIndexElements.style.zIndex = "5";
+    }
+  }, [selectedShape, selectShape]);
 
   useClickOutside(contextMenuRef, () => {
     if (!selectedShape) {
@@ -87,7 +82,7 @@ export const ShapeRenderer = () => {
   return (
     <div
       onContextMenu={(e) => e.preventDefault()}
-      onMouseMove={(e) => handleMouseMove(e)}
+      onMouseUp={handleMouseUp}
       className={styles.shape_container}
     >
       {shapes.map((shape) => (
@@ -97,7 +92,7 @@ export const ShapeRenderer = () => {
             selectedShape?.id === shape.id ? styles.grabbing : styles.grab
           }
           onMouseDown={(e) => handleMouseDown(shape, e)}
-          onMouseUp={(e) => handleMouseUp(e)}
+          onMouseMove={(e) => handleMouseMove(e)}
         >
           {shape.render()}
         </div>

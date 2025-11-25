@@ -42,8 +42,6 @@ export const useShapeStore = create<IStoreState>()(
         return (state) => {
           if (!state) return;
           state.shapes = state.shapes.map((shape) => {
-            console.log(shape);
-
             return ShapeFactory.createShape(shape.type, { ...shape });
           });
         };

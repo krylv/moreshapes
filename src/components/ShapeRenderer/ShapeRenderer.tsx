@@ -1,9 +1,9 @@
-import { useCallback, useRef, useState, type MouseEvent } from "react";
+import { useCallback, useMemo, useRef, useState, type MouseEvent } from "react";
 import type { IBaseShape, IDraggable } from "types";
 import styles from "./ShapeRenderer.module.css";
 import { useShapeStore } from "@/store";
 import { ContextMenu, type IContextMenu } from "../ContextMenu";
-import { BaseShape } from "@/lib";
+import { BaseShape, Magnetizm } from "@/lib";
 import { useClickOutside } from "@/hooks";
 
 export const ShapeRenderer = () => {
@@ -11,6 +11,7 @@ export const ShapeRenderer = () => {
 
   const contextMenuRef = useRef<HTMLDivElement>(null);
   const [contextMenu, setContextMenu] = useState<IContextMenu | null>(null);
+  const magnetizm = useMemo(() => new Magnetizm(), []);
 
   const handleMouseDown = (shape: IBaseShape & IDraggable, e: MouseEvent) => {
     if (e.button === 0) {
@@ -42,17 +43,24 @@ export const ShapeRenderer = () => {
       if (!selectedShape || !selectedShape.isDraggable) return;
       event.preventDefault();
       event.stopPropagation();
+
       const newPosition = {
         x: event.clientX - selectedShape.size / 2,
         y: event.clientY - selectedShape.size / 2,
       };
 
+      const { position: magnetizedPosition } = magnetizm.applyMagnetism(
+        selectedShape,
+        newPosition,
+        shapes
+      );
+
       if (selectedShape instanceof BaseShape) {
-        selectedShape.move(newPosition);
+        selectedShape.move(magnetizedPosition);
         selectShape(selectedShape.id);
       }
     },
-    [selectShape, selectedShape]
+    [selectShape, selectedShape, magnetizm, shapes]
   );
 
   const handleMouseUp = useCallback(
@@ -63,7 +71,6 @@ export const ShapeRenderer = () => {
         const targetChildren = e.currentTarget.children.namedItem(
           "shape"
         ) as HTMLElement;
-
         targetChildren.style.zIndex = "5";
       }
     },

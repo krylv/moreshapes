@@ -1,28 +1,31 @@
 import { useCallback, useRef, useState, type MouseEvent } from "react";
-import type { IBaseShape, IDraggable, IPosition, TDraggableShape } from "types";
-import { BaseShape } from "../shapes/BaseShape";
-import { useShapeStore } from "../../store";
+import type { IBaseShape, IDraggable } from "types";
 import styles from "./ShapeRenderer.module.css";
-import { useClickOutside } from "../../hooks";
-
-interface IContextMenu {
-  position: IPosition;
-  shape: TDraggableShape;
-}
+import { useShapeStore } from "@/store";
+import { ContextMenu, type IContextMenu } from "../ContextMenu";
+import { BaseShape } from "@/lib";
+import { useClickOutside } from "@/hooks";
 
 export const ShapeRenderer = () => {
-  const { selectedShape, shapes, selectShape, changeColor } = useShapeStore();
-  const [contextMenu, setContextMenu] = useState<IContextMenu | null>(null);
+  const { selectedShape, shapes, selectShape } = useShapeStore();
+
   const contextMenuRef = useRef<HTMLDivElement>(null);
+  const [contextMenu, setContextMenu] = useState<IContextMenu | null>(null);
 
   const handleMouseDown = (shape: IBaseShape & IDraggable, e: MouseEvent) => {
     if (e.button === 0) {
       shape.startDrag();
-      selectShape(shape);
+      selectShape(shape.id);
       setContextMenu(null);
+      const targetChildren = e.currentTarget.children.namedItem(
+        "shape"
+      ) as HTMLElement;
+
+      targetChildren.style.zIndex = "9999";
     }
     if (e.button === 2) {
       e.preventDefault();
+      selectShape(shape.id);
 
       setContextMenu({
         position: {
@@ -31,14 +34,14 @@ export const ShapeRenderer = () => {
         },
         shape: shape,
       });
-      selectShape(shape);
     }
   };
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
       if (!selectedShape || !selectedShape.isDraggable) return;
-
+      event.preventDefault();
+      event.stopPropagation();
       const newPosition = {
         x: event.clientX - selectedShape.size / 2,
         y: event.clientY - selectedShape.size / 2,
@@ -46,18 +49,26 @@ export const ShapeRenderer = () => {
 
       if (selectedShape instanceof BaseShape) {
         selectedShape.move(newPosition);
-        selectShape(selectedShape);
+        selectShape(selectedShape.id);
       }
     },
     [selectShape, selectedShape]
   );
 
-  const handleMouseUp = useCallback(() => {
-    if (selectedShape) {
-      selectedShape.endDrag();
-      selectShape(null);
-    }
-  }, [selectedShape, selectShape]);
+  const handleMouseUp = useCallback(
+    (e: MouseEvent) => {
+      if (selectedShape) {
+        selectedShape.endDrag();
+        selectShape(null);
+        const targetChildren = e.currentTarget.children.namedItem(
+          "shape"
+        ) as HTMLElement;
+
+        targetChildren.style.zIndex = "5";
+      }
+    },
+    [selectedShape, selectShape]
+  );
 
   useClickOutside(contextMenuRef, () => {
     if (!selectedShape) {
@@ -69,48 +80,27 @@ export const ShapeRenderer = () => {
   return (
     <div
       onContextMenu={(e) => e.preventDefault()}
-      onMouseUp={handleMouseUp}
       onMouseMove={(e) => handleMouseMove(e)}
-      style={{ position: "relative", width: "100vw", height: "100vh" }}
+      className={styles.shape_container}
     >
       {shapes.map((shape) => (
         <div
           key={shape.id}
-          style={{
-            cursor: selectedShape?.id === shape.id ? "grabbing" : "grab",
-          }}
+          className={
+            selectedShape?.id === shape.id ? styles.grabbing : styles.grab
+          }
           onMouseDown={(e) => handleMouseDown(shape, e)}
+          onMouseUp={(e) => handleMouseUp(e)}
         >
           {shape.render()}
         </div>
       ))}
       {contextMenu && (
-        <div
-          ref={contextMenuRef}
-          style={{
-            left: `${contextMenu.position.x}px`,
-            top: `${contextMenu.position.y}px`,
-          }}
-          className={styles.context_menu}
-        >
-          <div className={styles.context_item}>
-            <p>Изменить цвет</p>
-            <input
-              style={{
-                position: "absolute",
-                opacity: 0,
-                inset: 0,
-                width: "100%",
-                height: "100%",
-              }}
-              type="color"
-              onInput={(e) =>
-                changeColor(contextMenu.shape, e.currentTarget.value)
-              }
-            />
-          </div>
-          <button className={styles.context_item}>Изменить размер</button>
-        </div>
+        <ContextMenu
+          contextMenu={contextMenu}
+          contextRef={contextMenuRef}
+          setContextMenu={setContextMenu}
+        />
       )}
     </div>
   );

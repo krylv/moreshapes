@@ -7,6 +7,7 @@
   --bg-primary: #0f0f0f;
   --bg-secondary: #1a1a1a;
   --bg-tertiary: #2d2d2d;
+  --font-gothic: "M PLUS Rounded 1c", serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,6 +17,7 @@
 body {
   background-color: var(--bg-tertiary);
   overflow: hidden;
+  font-family: var(--font-gothic);
 }
 
 button {
@@ -30,4 +32,9 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input {
+  outline: none;
 }

@@ -5,8 +5,8 @@ import type {
   TCreateForm,
   TCreateFormErrors,
 } from "./CreateFormTypes";
-import { useShapeStore } from "../../store";
-import { ShapeFactory } from "../../factories";
+import { useShapeStore } from "@/store";
+import { ShapeFactory } from "@/factories";
 export const CreateForm = ({ onClose }: TCreateForm) => {
   const [formData, setFormData] = useState<ICreateForm>({
     shapeType: "circle",
@@ -24,8 +24,8 @@ export const CreateForm = ({ onClose }: TCreateForm) => {
     if (!data.color) {
       newErrors.color = "Выберите цвет";
     }
-    if (!data.size) {
-      newErrors.size = "Введите размер фигуры";
+    if (!data.size || data.size <= 5) {
+      newErrors.size = "Размер фигуры должен быть больше 5";
     }
     return newErrors;
   };
@@ -53,7 +53,7 @@ export const CreateForm = ({ onClose }: TCreateForm) => {
       <div>
         <select
           name="shapes"
-          style={{ fontSize: "20px", width: "100%" }}
+          style={{ fontSize: "16px", width: "100%", padding: "5px" }}
           value={formData.shapeType}
           onChange={(e) => handleInputChange("shapeType", e.target.value)}
         >
@@ -83,8 +83,8 @@ export const CreateForm = ({ onClose }: TCreateForm) => {
         <input
           name="size"
           type="number"
+          style={{ fontSize: "16px", width: "100%" }}
           value={formData.size}
-          min={5}
           onChange={(e) => handleInputChange("size", e.target.value)}
         />
         <p className={styles.error_text} style={{ opacity: 0 }}>

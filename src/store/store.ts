@@ -1,30 +1,53 @@
 import { create } from "zustand";
-import type { TDraggableShape } from "../types";
+import type { IStoreState } from "./storeTypes";
+import { persist } from "zustand/middleware";
+import { ShapeFactory } from "@/factories";
 
-interface StoreState {
-  shapes: TDraggableShape[];
-  selectedShape: TDraggableShape | null;
-  addShape: (shape: TDraggableShape) => void;
-  selectShape: (shape: TDraggableShape | null) => void;
-  changeColor: (shape: TDraggableShape | null, newColor: string) => void;
-  changeSize: (shape: TDraggableShape | null, newSize: number) => void;
-}
-export const useShapeStore = create<StoreState>((set) => ({
-  shapes: [],
-  selectedShape: null,
-  addShape(shape) {
-    set((state) => ({ shapes: [...state.shapes, shape] }));
-  },
-  selectShape(shape) {
-    set(() => ({ selectedShape: shape }));
-  },
-  changeColor(shape, newColor) {
-    console.log(newColor);
-    console.log(shape);
+export const useShapeStore = create<IStoreState>()(
+  persist(
+    (set) => ({
+      shapes: [],
 
-    shape?.changeColor(newColor);
-  },
-  changeSize(shape, newSize) {
-    shape?.resize(newSize);
-  },
-}));
+      selectedShape: null,
+      addShape(shape) {
+        set((state) => ({ shapes: [...state.shapes, shape] }));
+      },
+      selectShape(shapeId) {
+        set((state) => ({
+          selectedShape: state.shapes.find((s) => s.id === shapeId),
+        }));
+      },
+      changeColor(shape, newColor) {
+        shape.changeColor(newColor);
+        set((state) => ({ shapes: [...state.shapes] }));
+      },
+      changeSize(shape, newSize) {
+        shape.resize(newSize);
+        set((state) => ({
+          shapes: [...state.shapes],
+        }));
+      },
+      removeShape(shapeId) {
+        set((state) => ({
+          shapes: state.shapes.filter((s) => s.id !== shapeId),
+        }));
+      },
+    }),
+    {
+      name: "shapesData",
+      partialize: (state) => ({
+        shapes: state.shapes.map((shape) => ({ ...shape })),
+      }),
+      onRehydrateStorage() {
+        return (state) => {
+          if (!state) return;
+          state.shapes = state.shapes.map((shape) => {
+            console.log(shape);
+
+            return ShapeFactory.createShape(shape.type, { ...shape });
+          });
+        };
+      },
+    }
+  )
+);

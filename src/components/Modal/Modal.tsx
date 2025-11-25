@@ -1,8 +1,9 @@
 import { useRef } from "react";
-import { CreateForm } from "../CreateForm";
 import styles from "./Modal.module.css";
 import type { IModal } from "./ModalTypes";
-import { useClickOutside } from "../../hooks";
+import { useClickOutside } from "@/hooks";
+import { CreateForm } from "../CreateForm";
+
 export const Modal = ({ onClose }: IModal) => {
   const menuRef = useRef<HTMLDivElement>(null);
 

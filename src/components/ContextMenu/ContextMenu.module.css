@@ -1,0 +1,51 @@
+.context_menu {
+  position: absolute;
+  z-index: 9999;
+  width: 200px;
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.context_item {
+  color: white;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  transition: all 300ms ease;
+  display: flex;
+  gap: 15px;
+
+  &:hover {
+    background-color: var(--bg-tertiary);
+  }
+}
+
+.color_input {
+  position: absolute;
+  left: 200px;
+  opacity: 100;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.size_container {
+  position: absolute;
+  left: 100%;
+  inset: 0;
+  left: 100%;
+  width: 100%;
+  height: 45px;
+  padding: 10px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: var(--bg-secondary);
+}
+
+.error_text {
+  color: #882727;
+}

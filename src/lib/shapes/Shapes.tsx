@@ -1,6 +1,6 @@
 import type { IPosition } from "types";
-import { BaseShape } from "./BaseShape";
 import type { JSX } from "react";
+import { BaseShape } from "./base/BaseShape";
 
 export class Square extends BaseShape {
   constructor(position: IPosition, size: number, color: string) {
@@ -10,6 +10,7 @@ export class Square extends BaseShape {
   public render(): JSX.Element {
     return (
       <div
+        id="shape"
         style={{
           position: "absolute",
           left: `${this.position.x}px`,
@@ -31,6 +32,7 @@ export class Circle extends BaseShape {
   public render(): JSX.Element {
     return (
       <div
+        id="shape"
         style={{
           position: "absolute",
           left: `${this.position.x}px`,

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Modal } from "../Modal";
 import styles from "./Toolbar.module.css";
+import { Modal } from "../Modal";
+
 export const Toolbar = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const handleOpenModal = () => {

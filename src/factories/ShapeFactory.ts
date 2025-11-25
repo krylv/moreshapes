@@ -1,17 +1,35 @@
-import { Circle, Square } from "../components/shapes/Shapes";
-import type { TDraggableShape, TShapeTypes } from "../types";
+import { Circle, Square } from "@/lib";
 import type { IShapeFactoryConfig } from "./ShapeFactoryTypes";
+import type { TDraggableShape, TShapeTypes } from "@/types";
 
 export class ShapeFactory {
   static createShape(
     type: TShapeTypes,
-    config: IShapeFactoryConfig,
+    config: IShapeFactoryConfig
   ): TDraggableShape {
     switch (type) {
       case "circle":
-        return new Circle({ x: 100, y: 100 }, config.size, config.color);
+        return new Circle(
+          config.position
+            ? config.position
+            : {
+                x: window.innerWidth / 2 - config.size / 2,
+                y: window.innerHeight / 2 - config.size / 2,
+              },
+          config.size,
+          config.color
+        );
       case "square":
-        return new Square({ x: 100, y: 100 }, config.size, config.color);
+        return new Square(
+          config.position
+            ? config.position
+            : {
+                x: window.innerWidth / 2 - config.size / 2,
+                y: window.innerHeight / 2 - config.size / 2,
+              },
+          config.size,
+          config.color
+        );
     }
   }
 }

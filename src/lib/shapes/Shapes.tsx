@@ -18,6 +18,9 @@ export class Square extends BaseShape {
           width: `${this.size}px`,
           height: `${this.size}px`,
           backgroundColor: this.color,
+          boxShadow: this.isDraggable ? "0 0 0 0 rgba(0, 150, 255, 0.7)" : "",
+          animation: this.isDraggable ? "pulse 1s infinite" : "",
+          zIndex: this.isDraggable ? "9999" : "0",
         }}
       ></div>
     );
@@ -40,7 +43,10 @@ export class Circle extends BaseShape {
           width: `${this.size}px`,
           height: `${this.size}px`,
           backgroundColor: this.color,
+          boxShadow: this.isDraggable ? "0 0 0 0 rgba(0, 150, 255, 0.7)" : "",
+          animation: this.isDraggable ? "pulse 1s infinite" : "",
           borderRadius: "50%",
+          zIndex: this.isDraggable ? "9999" : "0",
         }}
       />
     );

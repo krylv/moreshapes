@@ -13,27 +13,28 @@ export const ShapeRenderer = () => {
   const [contextMenu, setContextMenu] = useState<IContextMenu | null>(null);
   const magnetizm = useMemo(() => new Magnetizm(), []);
 
-  const handleMouseDown = (shape: IBaseShape & IDraggable, e: MouseEvent) => {
-    if (e.button === 0) {
-      shape.startDrag();
-      selectShape(shape.id);
-      setContextMenu(null);
-      const targetChildren = e.currentTarget.querySelector(
-        "div > div"
-      ) as HTMLElement;
-      targetChildren.style.zIndex = "9999";
-    }
-    if (e.button === 2) {
-      e.preventDefault();
-      selectShape(shape.id);
-
-      setContextMenu({
-        position: {
-          x: shape.position.x + shape.size / 2,
-          y: shape.position.y + shape.size / 2,
-        },
-        shape: shape,
-      });
+  const handleMouseDown = (
+    shape: IBaseShape & IDraggable,
+    e: MouseEvent<HTMLElement>
+  ) => {
+    selectShape(shape.id);
+    switch (e.button) {
+      case 0:
+        shape.startDrag();
+        setContextMenu(null);
+        break;
+      case 2:
+        e.preventDefault();
+        setContextMenu({
+          position: {
+            x: shape.position.x + shape.size / 2,
+            y: shape.position.y + shape.size / 2,
+          },
+          shape: shape,
+        });
+        break;
+      default:
+        return;
     }
   };
 
@@ -64,11 +65,6 @@ export const ShapeRenderer = () => {
     if (selectedShape) {
       selectedShape.endDrag();
       selectShape(null);
-
-      const highZIndexElements = document.querySelector(
-        '[style*="z-index: 9999"]'
-      ) as HTMLElement;
-      highZIndexElements.style.zIndex = "5";
     }
   }, [selectedShape, selectShape]);
 

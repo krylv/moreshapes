@@ -10,6 +10,7 @@ export abstract class BaseShape implements IBaseShape, IDraggable {
   public size: number;
   public type: TShapeTypes;
   public isDraggable: boolean;
+  public zIndex:number
 
   constructor(
     type: TShapeTypes,
@@ -23,6 +24,7 @@ export abstract class BaseShape implements IBaseShape, IDraggable {
     this.size = size;
     this.type = type;
     this.isDraggable = false;
+    this.zIndex = 0
   }
 
   public abstract render(): JSX.Element;
@@ -46,4 +48,9 @@ export abstract class BaseShape implements IBaseShape, IDraggable {
   public endDrag(): void {
     this.isDraggable = false;
   }
+
+public changeIndex(direction: "up" | "down"): number {
+  this.zIndex += direction === 'up' ? 1 : -1;
+  return this.zIndex;
+}
 }

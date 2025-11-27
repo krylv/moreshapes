@@ -8,4 +8,5 @@ export interface IStoreState {
   changeColor: (shape: TDraggableShape, newColor: string) => void;
   changeSize: (shape: TDraggableShape, newSize: number) => void;
   removeShape: (shapeId: number) => void;
+  changeIndex:(shape:TDraggableShape,type:'up' | 'down') => void 
 }

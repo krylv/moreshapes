@@ -10,7 +10,7 @@ export const ContextMenu = ({
   contextRef,
   contextMenu,
 }: IContextMenuProps) => {
-  const { changeColor, changeSize, removeShape } = useShapeStore();
+  const { changeColor, changeSize, removeShape,changeIndex } = useShapeStore();
   const [sizeError, setSizeError] = useState<string | null>(null);
   const [visibleInput, setVisibleInput] = useState<"color" | "size" | null>(
     null
@@ -54,6 +54,11 @@ export const ContextMenu = ({
     setContextMenu(null);
     setVisibleInput(null);
   };
+
+  const handleChangeIndex = (shape:TDraggableShape,type:'up' | 'down') => {
+    changeIndex(shape,type)
+    
+  }
 
   if (!contextMenu) return;
   return (
@@ -104,6 +109,19 @@ export const ContextMenu = ({
         onClick={() => handleRemoveShape(contextMenu?.shape.id)}
       >
         <p>Удалить элемент</p>
+      </div>
+
+      <div
+        className={styles.context_item}
+        onClick={() => handleChangeIndex(contextMenu.shape,'up')}
+      >
+        <p>Поднять на слой выше</p>
+      </div>
+      <div
+        className={styles.context_item}
+        onClick={() => handleChangeIndex(contextMenu.shape,'down')}
+      >
+        <p>Опустить на слой ниже</p>
       </div>
     </div>
   );

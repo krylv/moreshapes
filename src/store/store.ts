@@ -32,6 +32,12 @@ export const useShapeStore = create<IStoreState>()(
           shapes: state.shapes.filter((s) => s.id !== shapeId),
         }));
       },
+      changeIndex(shape,type) {
+        shape.changeIndex(type)
+         set((state) => ({
+          shapes: [...state.shapes],
+        }));
+      },
     }),
     {
       name: "shapesData",

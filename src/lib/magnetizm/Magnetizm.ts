@@ -18,7 +18,6 @@ export class Magnetizm implements IMagnetizm {
 
     const minRadius = Math.min(...allShapes.map(shape => shape.size))
     this.magnetizmRadius = Math.max(minRadius-15,6)
-    console.log(this.magnetizmRadius);
     
   }
 

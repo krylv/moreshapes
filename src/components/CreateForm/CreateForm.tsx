@@ -11,7 +11,7 @@ export const CreateForm = ({ onClose }: TCreateForm) => {
   const [formData, setFormData] = useState<ICreateForm>({
     shapeType: "circle",
     color: "#000000",
-    size: 10,
+    size: 15,
   });
   const [errors, setErrors] = useState<TCreateFormErrors>({});
   const { addShape } = useShapeStore();

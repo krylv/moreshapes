@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import type { IBaseShape, IDraggable } from "types";
 import styles from "./ShapeRenderer.module.css";
 import { useShapeStore } from "@/store";
@@ -73,6 +73,10 @@ export const ShapeRenderer = () => {
       setContextMenu(null);
     }
   });
+
+  useEffect(() => {
+    magnetizm.updateRadius(shapes)
+  },[shapes,magnetizm])
 
   if (!shapes) return null;
   return (

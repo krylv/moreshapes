@@ -5,8 +5,21 @@ import type { IMagnetizm } from "./MagnetizmTypes";
 export class Magnetizm implements IMagnetizm {
   private magnetizmRadius: number;
 
-  constructor(radius: number = 30) {
+  constructor(radius: number = 6) {
     this.magnetizmRadius = radius;
+  }
+
+
+  public updateRadius(allShapes:TDraggableShape[]):void{
+    if (!allShapes.length) {
+      this.magnetizmRadius = 30
+      return
+    }
+
+    const minRadius = Math.min(...allShapes.map(shape => shape.size))
+    this.magnetizmRadius = Math.max(minRadius-15,6)
+    console.log(this.magnetizmRadius);
+    
   }
 
   public applyMagnetism(

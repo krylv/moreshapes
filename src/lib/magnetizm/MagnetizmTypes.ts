@@ -6,4 +6,5 @@ export interface IMagnetizm {
     newPosition: IPosition,
     allShapes: TDraggableShape[]
   ): { position: IPosition };
+  updateRadius(allShapes:TDraggableShape[]):void
 }

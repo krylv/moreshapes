@@ -23,8 +23,8 @@ export const ContextMenu = ({
   );
   const debouncedChangeSize = useDebouncedCallback(
     (shape: TDraggableShape, value: number) => {
-      if (value <= 5) {
-        setSizeError("*Больше 5");
+      if (value <= 15) {
+        setSizeError("*Больше 15");
         return;
       }
       if (value > window.innerHeight || value > window.innerWidth) {
@@ -106,13 +106,6 @@ export const ContextMenu = ({
       </div>
       <div
         className={styles.context_item}
-        onClick={() => handleRemoveShape(contextMenu?.shape.id)}
-      >
-        <p>Удалить элемент</p>
-      </div>
-
-      <div
-        className={styles.context_item}
         onClick={() => handleChangeIndex(contextMenu.shape,'up')}
       >
         <p>Поднять на слой выше</p>
@@ -121,7 +114,13 @@ export const ContextMenu = ({
         className={styles.context_item}
         onClick={() => handleChangeIndex(contextMenu.shape,'down')}
       >
-        <p>Опустить на слой ниже</p>
+        <p style={{wordBreak:'keep-all'}}>Опустить на слой ниже</p>
+      </div>
+      <div
+        className={styles.context_item}
+        onClick={() => handleRemoveShape(contextMenu?.shape.id)}
+      >
+        <p>Удалить элемент</p>
       </div>
     </div>
   );

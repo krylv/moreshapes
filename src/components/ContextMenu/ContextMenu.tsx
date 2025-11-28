@@ -23,8 +23,8 @@ export const ContextMenu = ({
   );
   const debouncedChangeSize = useDebouncedCallback(
     (shape: TDraggableShape, value: number) => {
-      if (value <= 15) {
-        setSizeError("*Больше 15");
+      if (value <= 14) {
+        setSizeError("*Больше 14");
         return;
       }
       if (value > window.innerHeight || value > window.innerWidth) {

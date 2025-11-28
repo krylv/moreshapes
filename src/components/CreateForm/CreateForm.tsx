@@ -24,8 +24,8 @@ export const CreateForm = ({ onClose }: TCreateForm) => {
     if (!data.color) {
       newErrors.color = "Выберите цвет";
     }
-    if (!data.size || data.size <= 15) {
-      newErrors.size = "Размер фигуры должен быть больше 5";
+    if (!data.size || data.size <= 14) {
+      newErrors.size = "Размер фигуры должен быть больше 14";
     }
     return newErrors;
   };

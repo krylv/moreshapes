@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useCallback, useMemo, useRef, useState, type MouseEvent } from "react";
 import type { IBaseShape, IDraggable } from "types";
 import styles from "./ShapeRenderer.module.css";
 import { useShapeStore } from "@/store";
@@ -74,15 +74,14 @@ export const ShapeRenderer = () => {
     }
   });
 
-  useEffect(() => {
-    magnetizm.updateRadius(shapes)
-  },[shapes,magnetizm])
-
   if (!shapes) return null;
   return (
     <div
       onContextMenu={(e) => e.preventDefault()}
       onMouseUp={handleMouseUp}
+      onMouseMove={(e) => handleMouseMove(e)}
+      onMouseLeave={handleMouseUp}
+      id="here"
       className={styles.shape_container}
     >
       {shapes.map((shape) => (
@@ -92,7 +91,6 @@ export const ShapeRenderer = () => {
             selectedShape?.id === shape.id ? styles.grabbing : styles.grab
           }
           onMouseDown={(e) => handleMouseDown(shape, e)}
-          onMouseMove={(e) => handleMouseMove(e)}
         >
           {shape.render()}
         </div>

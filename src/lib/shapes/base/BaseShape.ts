@@ -1,7 +1,7 @@
 import type { JSX } from "react";
-import type { IBaseShape, IDraggable, IPosition, TShapeTypes } from "types";
+import type { IPosition, IShapeDisplayConfig, TDraggableShape, TShapeTypes } from "types";
 
-export abstract class BaseShape implements IBaseShape, IDraggable {
+export abstract class BaseShape implements TDraggableShape {
   private static idCounter: number = 0;
 
   public id: number;
@@ -27,7 +27,7 @@ export abstract class BaseShape implements IBaseShape, IDraggable {
     this.zIndex = 0
   }
 
-  public abstract render(): JSX.Element;
+  public abstract render(displayConfig:IShapeDisplayConfig): JSX.Element;
 
   public move(newPosition: IPosition): void {
     this.position = newPosition;

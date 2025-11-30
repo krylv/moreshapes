@@ -4,4 +4,5 @@ export type {
   IPosition,
   TShapeTypes,
   TDraggableShape,
+  IShapeDisplayConfig,
 } from "./types.ts";

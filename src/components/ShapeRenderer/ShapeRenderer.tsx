@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState, type MouseEvent } from "react";
-import type { IBaseShape, IDraggable } from "types";
+import type { TDraggableShape } from "types";
 import styles from "./ShapeRenderer.module.css";
 import { useShapeStore } from "@/store";
 import { ContextMenu, type IContextMenu } from "../ContextMenu";
@@ -7,14 +7,14 @@ import { BaseShape, Magnetizm } from "@/lib";
 import { useClickOutside } from "@/hooks";
 
 export const ShapeRenderer = () => {
-  const { selectedShape, shapes, selectShape } = useShapeStore();
+  const { selectedShape, shapes, selectShape,displayConfig } = useShapeStore();
 
   const contextMenuRef = useRef<HTMLDivElement>(null);
   const [contextMenu, setContextMenu] = useState<IContextMenu | null>(null);
   const magnetizm = useMemo(() => new Magnetizm(), []);
 
   const handleMouseDown = (
-    shape: IBaseShape & IDraggable,
+    shape: TDraggableShape,
     e: MouseEvent<HTMLElement>
   ) => {
     selectShape(shape.id);
@@ -92,7 +92,7 @@ export const ShapeRenderer = () => {
           }
           onMouseDown={(e) => handleMouseDown(shape, e)}
         >
-          {shape.render()}
+          {shape.render(displayConfig)}
         </div>
       ))}
       {contextMenu && (

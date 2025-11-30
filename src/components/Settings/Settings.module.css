@@ -1,0 +1,32 @@
+.settings_container {
+	position: fixed;
+	right:5px;
+	top:5px
+}
+
+.settings_popup_container {
+	background-color: white;
+	position: relative;
+	padding: 5px;
+	border-radius: 10px;
+	cursor: pointer;
+	
+}
+
+.settings_popup{
+	max-height: 0;
+	overflow: hidden;
+	background-color: white;
+	transition: all 0.3s ease-in-out;
+	
+	&>p{
+		font-size: 20px;
+	}
+	
+}
+
+.settings_popup_container:hover .settings_popup {
+   max-height: 500px
+	
+}
+

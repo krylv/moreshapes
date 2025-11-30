@@ -1,12 +1,14 @@
-import type { TDraggableShape } from "@/types";
+import type { IShapeDisplayConfig, TDraggableShape } from "@/types";
 
 export interface IStoreState {
   shapes: TDraggableShape[];
   selectedShape: TDraggableShape | null;
+  displayConfig:IShapeDisplayConfig
   addShape: (shape: TDraggableShape) => void;
   selectShape: (shapeId: number | null) => void;
   changeColor: (shape: TDraggableShape, newColor: string) => void;
   changeSize: (shape: TDraggableShape, newSize: number) => void;
   removeShape: (shapeId: number) => void;
   changeIndex:(shape:TDraggableShape,type:'up' | 'down') => void 
+  changeDisplayConfig:(displayConfig:IShapeDisplayConfig) => void
 }

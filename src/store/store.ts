@@ -7,7 +7,7 @@ export const useShapeStore = create<IStoreState>()(
   persist(
     (set) => ({
       shapes: [],
-
+      displayConfig:{},
       selectedShape: null,
       addShape(shape) {
         set((state) => ({ shapes: [...state.shapes, shape] }));
@@ -37,6 +37,9 @@ export const useShapeStore = create<IStoreState>()(
          set((state) => ({
           shapes: [...state.shapes],
         }));
+      },
+      changeDisplayConfig(displayConfig) {
+        set(() => ({displayConfig:displayConfig}))
       },
     }),
     {

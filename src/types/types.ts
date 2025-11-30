@@ -2,21 +2,19 @@ import type { JSX } from "react";
 
 export interface IBaseShape {
   id: number;
-  size: number;
-  color: string;
-  zIndex:number
-  position: IPosition;
   type: TShapeTypes;
+  position: IPosition;
+  size: number;
   move(newPosition: IPosition): void;
-  changeColor(newColor: string): void;
   resize(newSize: number): void;
-  render(): JSX.Element;
-  changeIndex(direction:'up' | 'down'):number
+  render(displayConfig:IShapeDisplayConfig): JSX.Element;
 }
 
-export interface IPosition {
-  x: number;
-  y: number;
+export interface IVisualSettings {
+  color: string;
+  zIndex: number;
+  changeColor(newColor: string): void;
+  changeIndex(direction: 'up' | 'down'): number;
 }
 
 export interface IDraggable {
@@ -25,6 +23,16 @@ export interface IDraggable {
   endDrag(): void;
 }
 
+export interface IShapeDisplayConfig  {
+  showLayer?:boolean
+}
+
+export interface IPosition {
+  x: number;
+  y: number;
+}
+
 export type TShapeTypes = "circle" | "square";
 
-export type TDraggableShape = IBaseShape & IDraggable;
+export type TVisualShape = IBaseShape & IVisualSettings;
+export type TDraggableShape = IBaseShape & IVisualSettings & IDraggable;

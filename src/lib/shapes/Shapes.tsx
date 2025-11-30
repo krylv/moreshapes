@@ -1,13 +1,14 @@
-import type { IPosition } from "types";
+import type { IPosition, IShapeDisplayConfig } from "types";
 import type { JSX } from "react";
 import { BaseShape } from "./base/BaseShape";
+import styles from './Shapes.module.css'
 
 export class Square extends BaseShape {
   constructor(position: IPosition, size: number, color: string) {
     super("square", position, size, color);
   }
 
-  public render(): JSX.Element {
+  public render(displayConfig:IShapeDisplayConfig): JSX.Element {
     return (
       <div
         id="shape"
@@ -22,7 +23,11 @@ export class Square extends BaseShape {
           animation: this.isDraggable ? "pulse 1s infinite" : "",
           zIndex: this.isDraggable ? "9999" : this.zIndex,
         }}
-      ></div>
+      >
+        <div className={styles.shape_settings}>
+          {displayConfig.showLayer && <p className={styles.item_class}>{`zIndex:${this.zIndex}`}</p>}
+        </div>
+      </div>
     );
   }
 }
@@ -32,7 +37,7 @@ export class Circle extends BaseShape {
     super("circle", position, size, color);
   }
 
-  public render(): JSX.Element {
+  public render(displayConfig:IShapeDisplayConfig): JSX.Element {
     return (
       <div
         id="shape"
@@ -48,7 +53,11 @@ export class Circle extends BaseShape {
           borderRadius: "50%",
           zIndex: this.isDraggable ? "9999" : this.zIndex,
         }}
-      />
+      >
+        <div className={styles.shape_settings}>
+          {displayConfig.showLayer && <p className={styles.item_class}>{`zIndex:${this.zIndex}`}</p>}
+        </div>
+      </div>
     );
   }
 }
